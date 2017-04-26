@@ -1,0 +1,12 @@
+add_library(chck_dl dl.c)
+target_link_libraries(chck_dl PRIVATE ${CMAKE_DL_LIBS})
+install_libraries(chck_dl)
+install_headers(dl.h)
+
+if (CHCK_BUILD_TESTS)
+   find_library(DL_LIBRARY dl)
+   add_definitions(-DDL_LIBRARY="${DL_LIBRARY}")
+   add_executable(dl_test test.c)
+   target_link_libraries(dl_test PRIVATE chck_dl)
+   add_test_ex(dl_test)
+endif ()
